@@ -19,5 +19,25 @@
         android:name="buu.s59160937.savemycards.ListCardFragment"
         android:label="fragment_list_card"
         tools:layout="@layout/fragment_list_card" />
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="buu.s59160937.savemycards.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" />
+    <fragment
+        android:id="@+id/viewCardFragment"
+        android:name="buu.s59160937.savemycards.ViewCardFragment"
+        android:label="fragment_view_card"
+        tools:layout="@layout/fragment_view_card" />
+    <fragment
+        android:id="@+id/restoreFragment"
+        android:name="buu.s59160937.savemycards.RestoreFragment"
+        android:label="fragment_restore"
+        tools:layout="@layout/fragment_restore" />
+    <fragment
+        android:id="@+id/backupFragment"
+        android:name="buu.s59160937.savemycards.BackupFragment"
+        android:label="fragment_backup"
+        tools:layout="@layout/fragment_backup" />
 
 </navigation>
