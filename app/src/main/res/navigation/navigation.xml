@@ -18,7 +18,14 @@
         android:id="@+id/listCardFragment"
         android:name="buu.s59160937.savemycards.ListCardFragment"
         android:label="fragment_list_card"
-        tools:layout="@layout/fragment_list_card" />
+        tools:layout="@layout/fragment_list_card" >
+        <action
+            android:id="@+id/action_listCardFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+        <action
+            android:id="@+id/action_listCardFragment_to_viewCardFragment"
+            app:destination="@id/viewCardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addCardFragment"
         android:name="buu.s59160937.savemycards.AddCardFragment"
