@@ -82,6 +82,4 @@
         android:background="@color/color1"
         android:text="Add"
         android:textColor="@color/design_default_color_primary" />
-
-
 </LinearLayout>
