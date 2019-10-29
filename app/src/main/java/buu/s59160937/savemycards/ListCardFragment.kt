@@ -27,6 +27,7 @@ class ListCardFragment : Fragment() {
         R.drawable.image3,
         R.drawable.image4
     )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +44,6 @@ class ListCardFragment : Fragment() {
 
         return binding.root
     }
-
 
 
 }
