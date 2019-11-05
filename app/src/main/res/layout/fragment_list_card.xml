@@ -21,6 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="buu.s59160937.savemycards.ListCardFragment">
 
+
     <LinearLayout
         android:id="@+id/ListCardConstraint"
         android:layout_width="match_parent"
