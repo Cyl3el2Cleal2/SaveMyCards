@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class ViewCardFragment : Fragment() {
 
     override fun onCreateView(
@@ -17,7 +16,16 @@ class ViewCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_card, container, false)
+        val binding  = DataBindingUtil.inflate<FragmentViewCardBinding>(
+            inflater,
+            R.layout.fragment_view_card,
+            container,
+            false
+        )
+
+
+
+        return binding.root
     }
 
 

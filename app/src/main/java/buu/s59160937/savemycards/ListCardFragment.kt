@@ -2,14 +2,17 @@ package buu.s59160937.savemycards
 
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Layout
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import buu.s59160937.savemycards.Database.Card
@@ -23,6 +26,7 @@ import kotlinx.coroutines.launch
 
 class ListCardFragment : Fragment() {
     var recyclerView: RecyclerView? = null
+    lateinit var ViewModel: CardViewModel
 
 
     override fun onCreateView(
@@ -35,7 +39,7 @@ class ListCardFragment : Fragment() {
 
         binding.listCard.layoutManager = LinearLayoutManager(activity)
 
-        val cardAdapter = context?.let { CardAdapter(it) }
+
 
 
 
@@ -43,16 +47,17 @@ class ListCardFragment : Fragment() {
         val dataSource = CardDatabase.getInstance(application).cardDatabaseDao
         val viewModelFactory = CardViewModelFactory(dataSource, application)
 
-        val CardViewModel =
+        ViewModel =
             ViewModelProviders.of(
                 this, viewModelFactory).get(CardViewModel::class.java)
 
 
         // Get a reference to the ViewModel associated with this fragment.
 
+        val cardAdapter = CardAdapter(ViewModel, this)
+        //        val cardAdapter = context?.let { CardAdapter(it) }
 
-
-        CardViewModel.cards.observe(this, Observer { cards ->
+        ViewModel.cards.observe(this, Observer { cards ->
             cardAdapter?.data = cards as ArrayList<Card>
         })
 
@@ -75,6 +80,12 @@ class ListCardFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun goViewCard(card: Card) {
+        Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
+        ViewModel.viewCard(this, card)
+//        viewModel.onGameFinishComplete()
     }
 
 

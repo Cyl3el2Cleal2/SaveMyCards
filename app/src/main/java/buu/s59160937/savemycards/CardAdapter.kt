@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card.view.*
 import kotlinx.android.synthetic.main.model.view.*
@@ -16,7 +18,7 @@ import buu.s59160937.savemycards.ViewModel.CardViewModel
 import buu.s59160937.savemycards.ViewModel.DataCard
 
 
-class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
+class CardAdapter(val viewModel: CardViewModel,MyFragment: Fragment) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     var data = ArrayList<Card>()
         set(value) {
@@ -24,10 +26,18 @@ class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewH
             notifyDataSetChanged()
         }
 
+    var myFragment = MyFragment
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         Log.i("CardAdapter",data.toString())
+        val card = Card(holder.itemId, holder.CardName.text.toString(), holder.Number.text.toString(), holder.Expire.text.toString(), holder.CVV.text.toString())
+        holder.apply {
+            Number.setOnClickListener{
+                viewModel.viewCard(myFragment, card)
+            }
+        }
         holder.bind(item)
     }
 
@@ -41,6 +51,9 @@ class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewH
         var Number = view.cardNumber
         var Thumbnail = view.cardBackground
         var CardName = view.cardName
+        var CVV = view.cardCVV
+        var Expire = view.cardExpire
+
 
         init {
             view.setOnClickListener { view: View ->
@@ -48,8 +61,9 @@ class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewH
                     view.findNavController()
                         .navigate(R.id.action_listCardFragment_to_addCardFragment)
                 } else {
-                    view.findNavController()
-                        .navigate(R.id.action_listCardFragment_to_viewCardFragment)
+//                    view.findNavController()
+//                        .navigate(R.id.action_listCardFragment_to_viewCardFragment)
+
                 }
 
             }
@@ -61,6 +75,8 @@ class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewH
             Thumbnail.setImageResource(cardbackground)
             CardName.text = item.name
             Number.text = item.number
+            CVV.text = item.CVV
+            Expire.text = item.expire
 
 
         }

@@ -2,11 +2,14 @@ package buu.s59160937.savemycards.ViewModel
 
 import android.app.Application
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.NavHostFragment
 import buu.s59160937.savemycards.Database.Card
 import buu.s59160937.savemycards.Database.CardDatabaseDao
+import buu.s59160937.savemycards.ListCardFragmentDirections
 import kotlinx.coroutines.*
 
 data class DataCard(val name : String, val number: String,val expire: String,val CVV: String){
@@ -61,6 +64,11 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
 
     fun deleteCard(){
 
+    }
+
+    fun viewCard(fragment: Fragment, card: Card){
+        val action = ListCardFragmentDirections.actionListCardFragmentToViewCardFragment(card.name, card.number, card.expire, card.CVV)
+        NavHostFragment.findNavController(fragment).navigate(action)
     }
 
 }

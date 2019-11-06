@@ -11,7 +11,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_listCardFragment"
-            app:destination="@id/listCardFragment" />
+            app:destination="@id/listCardFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment
@@ -24,7 +25,9 @@
             app:destination="@id/addCardFragment" />
         <action
             android:id="@+id/action_listCardFragment_to_viewCardFragment"
-            app:destination="@id/viewCardFragment" />
+            app:destination="@+id/viewCardFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
@@ -35,7 +38,20 @@
         android:id="@+id/viewCardFragment"
         android:name="buu.s59160937.savemycards.ViewCardFragment"
         android:label="fragment_view_card"
-        tools:layout="@layout/fragment_view_card" />
+        tools:layout="@layout/fragment_view_card" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="number"
+            app:argType="string" />
+        <argument
+            android:name="expire"
+            app:argType="string" />
+        <argument
+            android:name="cvv"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/restoreFragment"
         android:name="buu.s59160937.savemycards.RestoreFragment"
