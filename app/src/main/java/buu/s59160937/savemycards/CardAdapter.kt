@@ -18,11 +18,13 @@ import buu.s59160937.savemycards.ViewModel.DataCard
 
 class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
-    var data = listOf<Card>()
-            set(value) {
-                field = value
-                notifyDataSetChanged()
-    }
+    var data = ArrayList<Card>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         Log.i("CardAdapter",data.toString())
@@ -56,7 +58,6 @@ class CardAdapter(val context: Context) : RecyclerView.Adapter<CardAdapter.ViewH
         }
 
         fun bind(item: Card) {
-            val res = itemView.context.resources
             Thumbnail.setImageResource(cardbackground)
             CardName.text = item.name
             Number.text = item.number

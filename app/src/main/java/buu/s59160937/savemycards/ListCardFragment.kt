@@ -8,11 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import buu.s59160937.savemycards.Database.Card
 import buu.s59160937.savemycards.Database.CardDatabase
 import buu.s59160937.savemycards.ViewModel.CardViewModel
+import buu.s59160937.savemycards.ViewModel.CardViewModelFactory
 import buu.s59160937.savemycards.databinding.FragmentListCardBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,12 +41,20 @@ class ListCardFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = CardDatabase.getInstance(application).cardDatabaseDao
-//        val viewModel = CardViewModel(dataSource, application)
-//
-//
-//        val CardViewModel =
-//            ViewModelProviders.of(
-//                this).get(CardViewModel::class.java)
+        val viewModelFactory = CardViewModelFactory(dataSource, application)
+
+        val CardViewModel =
+            ViewModelProviders.of(
+                this, viewModelFactory).get(CardViewModel::class.java)
+
+
+        // Get a reference to the ViewModel associated with this fragment.
+
+
+
+        CardViewModel.cards.observe(this, Observer { cards ->
+            cardAdapter?.data = cards as ArrayList<Card>
+        })
 
         binding.setLifecycleOwner(this)
 

@@ -25,7 +25,6 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
-    private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
 
     val cards = database.getAllcards()
     init {
