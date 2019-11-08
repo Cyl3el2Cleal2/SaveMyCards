@@ -41,7 +41,7 @@
                 android:text="@string/expire_date" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/expireDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,7 +62,7 @@
                 android:text="@string/cvv" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/CVV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
