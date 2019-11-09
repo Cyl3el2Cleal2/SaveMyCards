@@ -22,7 +22,8 @@
         tools:layout="@layout/fragment_list_card" >
         <action
             android:id="@+id/action_listCardFragment_to_addCardFragment"
-            app:destination="@id/addCardFragment" />
+            app:destination="@id/addCardFragment"
+            app:popUpTo="@+id/viewCardFragment" />
         <action
             android:id="@+id/action_listCardFragment_to_viewCardFragment"
             app:destination="@+id/viewCardFragment"

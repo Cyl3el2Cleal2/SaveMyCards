@@ -26,6 +26,7 @@ class LoginFragment : Fragment() {
 
         binding.playButton.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_loginFragment_to_listCardFragment)
+
         }
         Log.i("LoginFragment", "Enter Login")
         return binding.root
