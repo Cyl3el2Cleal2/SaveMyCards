@@ -18,7 +18,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import buu.s59160937.savemycards.Database.CardDatabase
+import buu.s59160937.savemycards.ViewModel.CardViewModel
+import buu.s59160937.savemycards.ViewModel.CardViewModelFactory
 import buu.s59160937.savemycards.databinding.FragmentLoginBinding
 import java.util.concurrent.Executors
 
@@ -26,9 +30,9 @@ import java.util.concurrent.Executors
 class LoginFragment : Fragment() {
 
 
-
-    var retry : Int = 0
-    lateinit var binding : FragmentLoginBinding
+    var retry: Int = 0
+    lateinit var binding: FragmentLoginBinding
+    lateinit var editor: SharedPreferences.Editor
     // TODO: Rename and change types of parameters
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,6 +44,7 @@ class LoginFragment : Fragment() {
     }
 
     override fun onResume() {
+        binding.editText2.setText("")
         (activity as AppCompatActivity)?.supportActionBar?.hide()
         super.onResume()
     }
@@ -53,48 +58,75 @@ class LoginFragment : Fragment() {
             R.layout.fragment_login, container, false
         )
 
-        val sharedPreferences: SharedPreferences? = activity?.getSharedPreferences("Unknow", Context.MODE_PRIVATE)
-        val editor = sharedPreferences?.edit()
-        val key = sharedPreferences?.getString("P@ssw0rd", "default")
-        if(key.equals("default")){
+        val sharedPreferences: SharedPreferences? =
+            activity?.getSharedPreferences("Unknow", Context.MODE_PRIVATE)
+        editor = sharedPreferences?.edit()!!
+        var key = sharedPreferences?.getString("P@ssw0rd", "default")
+        if (key.equals("default")) {
             binding.playButton.setText("Sign In")
             Toast.makeText(this.context, "Create Password", Toast.LENGTH_SHORT).show()
 
-        }else{
+        } else {
             binding.playButton.setText("Finger Print")
         }
 
         binding.playButton.setOnClickListener { view: View ->
-//                    //Hide keyboard
-                    val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(view.windowToken, 0)
-            if(binding.editText2.text.isNotEmpty()){
-                if(key.equals("default")){
+            //Hide keyboard
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+
+            //
+            key = sharedPreferences?.getString("P@ssw0rd", "default")
+
+            //Clear all
+            if(retry==5){
+                val application = requireNotNull(this.activity).application
+                val dataSource = CardDatabase.getInstance(application).cardDatabaseDao
+                val viewModelFactory = CardViewModelFactory(dataSource, application)
+
+                val ViewModel =
+                    ViewModelProviders.of(
+                        this, viewModelFactory
+                    ).get(CardViewModel::class.java)
+
+                ViewModel.clearCard()
+                Toast.makeText(context, "AntiHack Detected", Toast.LENGTH_SHORT).show()
+                editor?.putString("P@ssw0rd", "default")
+                editor?.apply()
+                Toast.makeText(context, "Wiped Data!", Toast.LENGTH_SHORT).show()
+                binding.editText2.setText("")
+                binding.playButton.setText("Sign In")
+            }
+
+            if (binding.editText2.text.isNotEmpty()) {
+                if (key.equals("default")) {
                     editor?.putString("P@ssw0rd", binding.editText2.text.toString())
                     editor?.apply()
                     view.findNavController().navigate(R.id.action_loginFragment_to_listCardFragment)
-                }else{
-                    if(key.equals(binding.editText2.text.toString())){
-                        view.findNavController().navigate(R.id.action_loginFragment_to_listCardFragment)
+                } else {
+                    if (key.equals(binding.editText2.text.toString())) {
+                        view.findNavController()
+                            .navigate(R.id.action_loginFragment_to_listCardFragment)
                     }
+
                 }
 
-            }else{
-                if(key.equals("default")){
+            } else {
+                if (key.equals("default")) {
                     Toast.makeText(this.context, "Enter Password", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     getFinger()
                 }
 
             }
-
+            retry = retry.plus(1)
         }
-        binding.editText2.addTextChangedListener(object :TextWatcher{
+        binding.editText2.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                if(!key.equals("default")){
-                    if(binding.editText2.text.toString().length > 0){
+                if (!key.equals("default")) {
+                    if (binding.editText2.text.toString().length > 0) {
                         binding.playButton.text = "Login"
-                    }else{
+                    } else {
                         binding.playButton.text = "Finger Print"
                     }
                 }
@@ -115,11 +147,11 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    fun test(){
+    fun test() {
         Toast.makeText(this.context, "Not Implemented", Toast.LENGTH_SHORT).show()
     }
 
-    fun getFinger(){
+    fun getFinger() {
 
 
         val activity: FragmentActivity? = this.activity
@@ -145,7 +177,8 @@ class LoginFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    view?.findNavController()?.navigate(R.id.action_loginFragment_to_listCardFragment)
+                    view?.findNavController()
+                        ?.navigate(R.id.action_loginFragment_to_listCardFragment)
                 }
 
                 override fun onAuthenticationFailed() {
@@ -155,9 +188,28 @@ class LoginFragment : Fragment() {
                 }
             })
         }
-        if(retry == 0){
+        if (retry == 0) {
             biometricPrompt?.authenticate(promptInfo)
-        }else{
+        } else {
+            if (retry == 5) {
+                val application = requireNotNull(this.activity).application
+                val dataSource = CardDatabase.getInstance(application).cardDatabaseDao
+                val viewModelFactory = CardViewModelFactory(dataSource, application)
+
+                val ViewModel =
+                    ViewModelProviders.of(
+                        this, viewModelFactory
+                    ).get(CardViewModel::class.java)
+
+                ViewModel.clearCard()
+                Toast.makeText(context, "AntiHack Detected", Toast.LENGTH_SHORT).show()
+                editor?.putString("P@ssw0rd", "default")
+                editor?.apply()
+                retry = 0
+                Toast.makeText(context, "Wiped Data!", Toast.LENGTH_SHORT).show()
+                binding.editText2.setText("")
+                binding.playButton.setText("Sign In")
+            }
             Toast.makeText(context, "Enter Password", Toast.LENGTH_SHORT).show()
             binding.playButton.text = "Login"
         }
@@ -166,5 +218,5 @@ class LoginFragment : Fragment() {
     }
 
 
-    }
+}
 

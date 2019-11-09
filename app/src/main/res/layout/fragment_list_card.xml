@@ -32,7 +32,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listCard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorLast">
 
         </androidx.recyclerview.widget.RecyclerView>
 

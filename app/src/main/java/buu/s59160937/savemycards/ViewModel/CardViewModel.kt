@@ -58,6 +58,12 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
         }
     }
 
+    private suspend fun clear() {
+        withContext(Dispatchers.IO) {
+            database.clear()
+        }
+    }
+
     fun addCard(card: Card){
         uiScope.launch {
             insert(card)
@@ -67,8 +73,13 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
 
     fun deleteCard(id: Long){
         uiScope.launch {
-            remove(id)
+            clear()
+        }
+    }
 
+    fun clearCard(){
+        uiScope.launch {
+            clear()
         }
     }
 
