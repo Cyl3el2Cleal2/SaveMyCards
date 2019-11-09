@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Layout
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,11 +26,29 @@ import kotlinx.coroutines.launch
 
 
 class ListCardFragment : Fragment() {
-    var recyclerView: RecyclerView? = null
+
     lateinit var ViewModel: CardViewModel
     lateinit var cardAdapter: CardAdapter
     lateinit var binding: FragmentListCardBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.setMenuVisibility(true)
+        (activity as AppCompatActivity)?.supportActionBar?.title = "My Cards"
+        (activity as AppCompatActivity)?.supportActionBar?.show()
+        setHasOptionsMenu(true)
+
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onResume() {
+        super.setMenuVisibility(true)
+        (activity as AppCompatActivity)?.supportActionBar?.title = "My Cards"
+        (activity as AppCompatActivity)?.supportActionBar?.show()
+        setHasOptionsMenu(true)
+        super.onResume()
+        Log.i("ListCardFragment", "Resume and Set Title")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,32 +76,41 @@ class ListCardFragment : Fragment() {
 
 
         cardAdapter = CardAdapter(ViewModel, this)
-
-
         ViewModel.cards.observe(this, Observer { cards ->
             cardAdapter?.data = cards as ArrayList<Card>
         })
 
         binding.setLifecycleOwner(this)
-
-//        GlobalScope.launch {
-//            var testData = dataSource.getAllcards()
-//            for (i in arrayOf(testData)){
-//                Log.i("ListCardFragment", i.toString())
-//            }
-//
-//        }
-
-
         binding.listCard.adapter = cardAdapter
-        binding.aboutButton.setOnClickListener{ view: View ->
-            view.findNavController().navigate(R.id.action_listCardFragment_to_about)
-
-        }
 
         setRecyclerViewItemTouchListener()
 
+
+
         return binding.root
+    }
+
+    //inflate the menu
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.menu, menu)
+
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    //handle item clicks of menu
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        //get item id to handle item clicks
+        val id = item!!.itemId
+        //handle item clicks
+        if (id == R.id.action_new_card){
+            view?.findNavController()?.navigate(R.id.action_listCardFragment_to_addCardFragment)
+            Toast.makeText(activity, "Enter Your Card Information", Toast.LENGTH_SHORT).show()
+        }else if (id == R.id.action_about){
+            view?.findNavController()?.navigate(R.id.action_listCardFragment_to_about)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setRecyclerViewItemTouchListener() {
@@ -103,8 +129,6 @@ class ListCardFragment : Fragment() {
                     Toast.makeText(context, cardAdapter.data[position].name + " removed", Toast.LENGTH_SHORT).show()
                     ViewModel.deleteCard(cardAdapter.data[position].cardId)
                 }
-
-
             }
         }
 

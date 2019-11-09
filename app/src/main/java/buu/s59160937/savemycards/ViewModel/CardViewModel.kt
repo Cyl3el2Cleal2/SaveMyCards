@@ -58,9 +58,8 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
         }
     }
 
-    fun addCard(){
+    fun addCard(card: Card){
         uiScope.launch {
-            val card = Card()
             insert(card)
 
         }

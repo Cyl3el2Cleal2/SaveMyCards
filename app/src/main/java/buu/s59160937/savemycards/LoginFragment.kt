@@ -1,19 +1,28 @@
 package buu.s59160937.savemycards
 
-import android.content.SharedPreferences
+
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import buu.s59160937.savemycards.databinding.FragmentLoginBinding
 
-class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
 
+class LoginFragment : Fragment() {
+
+    // TODO: Rename and change types of parameters
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        (activity as AppCompatActivity)?.supportActionBar?.hide()
+
+
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,4 +41,6 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-}
+
+    }
+

@@ -7,4 +7,7 @@
     <string name="expire_date">Expire Date</string>
     <string name="cvv">CVV</string>
     <string name="aboutText">Save My Cards v1.0</string>
+    <string name="hit_exp">67/89</string>
+    <string name="hint_cvv">012</string>
+    <string name="hint_number">9999-9999-9999-9999</string>
 </resources>

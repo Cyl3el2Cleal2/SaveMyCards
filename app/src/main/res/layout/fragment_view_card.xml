@@ -7,11 +7,14 @@
     <data>
 
     </data>
+
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorLast"
         android:orientation="vertical"
+        android:padding="12dp"
         android:weightSum="2">
 
 
@@ -27,15 +30,17 @@
 
             <TextView
                 android:id="@+id/Name"
+                style="@style/name_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="211dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="129dp"
-                android:layout_marginEnd="141dp"
-                android:textColor="@color/colorAccent"
+                android:layout_marginEnd="40dp"
+                android:textAlignment="textEnd"
+                android:textColor="?attr/colorButtonNormal"
                 tools:text="TextView" />
         </RelativeLayout>
 
@@ -48,12 +53,12 @@
             android:id="@+id/cardNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:ems="10"
             android:focusable="false"
+            android:hint="@string/hint_number"
             android:inputType="textPersonName"
-            android:clickable="true"
-            android:text=""
-            tools:text="9999-9999-9999-9999" />
+            android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,11 +83,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:ems="10"
                     android:focusable="false"
-                    android:inputType="textPersonName"
-                    android:clickable="true"
-                    android:text="9/22" />
+                    android:hint="@string/hit_exp"
+                    android:inputType="textPersonName" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,12 +106,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:ems="10"
                     android:focusable="false"
+                    android:hint="@string/hint_cvv"
                     android:inputType="textPersonName"
-                    android:clickable="true"
-                    android:text=""
-                    tools:text="987" />
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
 

@@ -29,32 +29,6 @@
         android:orientation="vertical">
 
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/aboutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@android:drawable/ic_menu_add"
-                app:backgroundTint="@color/colorPrimary" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@android:drawable/ic_menu_add"
-                app:backgroundTint="@color/colorPrimary" />
-        </androidx.appcompat.widget.Toolbar>
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listCard"
             android:layout_width="match_parent"

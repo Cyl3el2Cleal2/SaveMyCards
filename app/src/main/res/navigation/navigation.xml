@@ -37,7 +37,11 @@
         android:id="@+id/addCardFragment"
         android:name="buu.s59160937.savemycards.AddCardFragment"
         android:label="fragment_add_card"
-        tools:layout="@layout/fragment_add_card" />
+        tools:layout="@layout/fragment_add_card" >
+        <action
+            android:id="@+id/action_addCardFragment_to_listCardFragment"
+            app:destination="@id/listCardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewCardFragment"
         android:name="buu.s59160937.savemycards.ViewCardFragment"

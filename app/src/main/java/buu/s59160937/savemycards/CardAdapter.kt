@@ -32,6 +32,7 @@ class CardAdapter(val viewModel: CardViewModel,MyFragment: Fragment) : RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         Log.i("CardAdapter",data.toString())
+        holder.bind(item)
         if(data.size > 0){
             val card = Card(holder.itemId, holder.CardName.text.toString(), holder.Number.text.toString(), holder.Expire.text.toString(), holder.CVV.text.toString())
 
@@ -41,7 +42,7 @@ class CardAdapter(val viewModel: CardViewModel,MyFragment: Fragment) : RecyclerV
             }
         }
 
-        holder.bind(item)
+
     }
 
     override fun getItemCount() = data.size

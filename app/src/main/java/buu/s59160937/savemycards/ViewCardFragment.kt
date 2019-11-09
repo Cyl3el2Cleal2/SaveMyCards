@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import buu.s59160937.savemycards.databinding.FragmentViewCardBinding
 import androidx.databinding.adapters.TextViewBindingAdapter.setText
@@ -18,6 +19,15 @@ import androidx.databinding.adapters.TextViewBindingAdapter.setText
 
 
 class ViewCardFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        (activity as AppCompatActivity)?.supportActionBar?.hide()
+
+
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,21 +64,11 @@ class ViewCardFragment : Fragment() {
         }
 
 
-
-
-
-
-
-
-//        Log.i("ViewCardFragment", name.toString())
-
-
-
         return binding.root
     }
 
     fun copyToClipboard(text: CharSequence){
-        Toast.makeText(context,"Copied",Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,"Copied!", Toast.LENGTH_SHORT).show()
 
         val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("label", text)
