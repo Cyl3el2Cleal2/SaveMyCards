@@ -34,10 +34,8 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
 
         Log.i("CardViewModel", "init data")
 
-//        cards.add(DataCard("Test Card","9999-9999-9999","99/99","555"))
-//        cards.add(DataCard("","","",""))
         initializeCards()
-        addCard()
+//        addCard()
         Log.i("CardViewModel", cards.toString())
     }
 
@@ -54,6 +52,12 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
         }
     }
 
+    private suspend fun remove(id: Long) {
+        withContext(Dispatchers.IO) {
+            database.remove(id)
+        }
+    }
+
     fun addCard(){
         uiScope.launch {
             val card = Card()
@@ -62,8 +66,11 @@ class CardViewModel(dataSource: CardDatabaseDao, application: Application) : Vie
         }
     }
 
-    fun deleteCard(){
+    fun deleteCard(id: Long){
+        uiScope.launch {
+            remove(id)
 
+        }
     }
 
     fun viewCard(fragment: Fragment, card: Card){

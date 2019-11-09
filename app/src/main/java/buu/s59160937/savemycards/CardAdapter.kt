@@ -32,12 +32,15 @@ class CardAdapter(val viewModel: CardViewModel,MyFragment: Fragment) : RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         Log.i("CardAdapter",data.toString())
-        val card = Card(holder.itemId, holder.CardName.text.toString(), holder.Number.text.toString(), holder.Expire.text.toString(), holder.CVV.text.toString())
-        holder.apply {
-            Number.setOnClickListener{
+        if(data.size > 0){
+            val card = Card(holder.itemId, holder.CardName.text.toString(), holder.Number.text.toString(), holder.Expire.text.toString(), holder.CVV.text.toString())
+
+
+            holder.itemView.setOnClickListener {
                 viewModel.viewCard(myFragment, card)
             }
         }
+
         holder.bind(item)
     }
 
@@ -48,28 +51,12 @@ class CardAdapter(val viewModel: CardViewModel,MyFragment: Fragment) : RecyclerV
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         var Number = view.cardNumber
         var Thumbnail = view.cardBackground
         var CardName = view.cardName
         var CVV = view.cardCVV
         var Expire = view.cardExpire
-
-
-        init {
-            view.setOnClickListener { view: View ->
-                if (view.cardName?.text == "") {
-                    view.findNavController()
-                        .navigate(R.id.action_listCardFragment_to_addCardFragment)
-                } else {
-//                    view.findNavController()
-//                        .navigate(R.id.action_listCardFragment_to_viewCardFragment)
-
-                }
-
-            }
-
-
-        }
 
         fun bind(item: Card) {
             Thumbnail.setImageResource(cardbackground)

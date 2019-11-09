@@ -29,6 +29,9 @@
             app:destination="@+id/viewCardFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_listCardFragment_to_about"
+            app:destination="@id/about" />
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
@@ -63,5 +66,10 @@
         android:name="buu.s59160937.savemycards.BackupFragment"
         android:label="fragment_backup"
         tools:layout="@layout/fragment_backup" />
+    <fragment
+        android:id="@+id/about"
+        android:name="buu.s59160937.savemycards.About"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
 
 </navigation>

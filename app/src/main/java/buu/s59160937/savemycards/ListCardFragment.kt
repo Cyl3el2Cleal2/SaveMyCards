@@ -12,7 +12,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import buu.s59160937.savemycards.Database.Card
@@ -27,13 +29,15 @@ import kotlinx.coroutines.launch
 class ListCardFragment : Fragment() {
     var recyclerView: RecyclerView? = null
     lateinit var ViewModel: CardViewModel
+    lateinit var cardAdapter: CardAdapter
+    lateinit var binding: FragmentListCardBinding
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentListCardBinding>(
+        binding = DataBindingUtil.inflate<FragmentListCardBinding>(
             inflater, R.layout.fragment_list_card, container, false
         )
 
@@ -52,10 +56,10 @@ class ListCardFragment : Fragment() {
                 this, viewModelFactory).get(CardViewModel::class.java)
 
 
-        // Get a reference to the ViewModel associated with this fragment.
 
-        val cardAdapter = CardAdapter(ViewModel, this)
-        //        val cardAdapter = context?.let { CardAdapter(it) }
+
+        cardAdapter = CardAdapter(ViewModel, this)
+
 
         ViewModel.cards.observe(this, Observer { cards ->
             cardAdapter?.data = cards as ArrayList<Card>
@@ -63,30 +67,52 @@ class ListCardFragment : Fragment() {
 
         binding.setLifecycleOwner(this)
 
-        GlobalScope.launch {
-            var testData = dataSource.getAllcards()
-            for (i in arrayOf(testData)){
-                Log.i("ListCardFragment", i.toString())
-            }
+//        GlobalScope.launch {
+//            var testData = dataSource.getAllcards()
+//            for (i in arrayOf(testData)){
+//                Log.i("ListCardFragment", i.toString())
+//            }
+//
+//        }
+
+
+        binding.listCard.adapter = cardAdapter
+        binding.aboutButton.setOnClickListener{ view: View ->
+            view.findNavController().navigate(R.id.action_listCardFragment_to_about)
 
         }
 
-        //Fragment create dataSource
-        //ViewModel(dataSource)
-        //Adapter call ViewModel LiveData
-
-//        binding.CardViewModel = CardViewModel
-        binding.listCard.adapter = cardAdapter
-
+        setRecyclerViewItemTouchListener()
 
         return binding.root
     }
 
-    private fun goViewCard(card: Card) {
-        Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
-        ViewModel.viewCard(this, card)
-//        viewModel.onGameFinishComplete()
+    private fun setRecyclerViewItemTouchListener() {
+
+        //1
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, viewHolder1: RecyclerView.ViewHolder): Boolean {
+                //2
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                //3
+                if (cardAdapter.data.size > 0){
+                    val position = viewHolder.adapterPosition
+                    Toast.makeText(context, cardAdapter.data[position].name + " removed", Toast.LENGTH_SHORT).show()
+                    ViewModel.deleteCard(cardAdapter.data[position].cardId)
+                }
+
+
+            }
+        }
+
+        //4
+        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(binding.listCard)
     }
+
 
 
 }

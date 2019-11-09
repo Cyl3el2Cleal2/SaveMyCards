@@ -37,6 +37,9 @@ interface CardDatabaseDao {
     @Query("DELETE FROM card_table")
     fun clear()
 
+    @Query("DELETE FROM card_table WHERE cardID = :key")
+    fun remove(key: Long)
+
     @Query("SELECT * FROM card_table ORDER BY cardId DESC LIMIT 1")
     fun getTocard(): Card?
 

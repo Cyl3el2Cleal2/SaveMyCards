@@ -6,4 +6,5 @@
     <string name="card_number">Card Number</string>
     <string name="expire_date">Expire Date</string>
     <string name="cvv">CVV</string>
+    <string name="aboutText">Save My Cards v1.0</string>
 </resources>
