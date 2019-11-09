@@ -60,7 +60,7 @@ class AddCardFragment : Fragment() {
 
         binding.button.setOnClickListener { v ->
 
-            val card = Card(0,binding.cardNumber.text.toString(), binding.cardNumber.text.toString(), binding.CVV.text.toString(), binding.expireDate.text.toString())
+            val card = Card(0,binding.cardName.text.toString(), binding.cardNumber.text.toString(), binding.CVV.text.toString(), binding.expireDate.text.toString())
             if(card.name.isNotEmpty() && card.number.isNotEmpty() && card.CVV.isNotEmpty() && card.expire.isNotEmpty()){
                 ViewModel.addCard(card)
 

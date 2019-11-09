@@ -10,4 +10,5 @@
     <string name="hit_exp">67/89</string>
     <string name="hint_cvv">012</string>
     <string name="hint_number">9999-9999-9999-9999</string>
+    <string name="card_name">Card Name</string>
 </resources>

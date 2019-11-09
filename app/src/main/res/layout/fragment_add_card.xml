@@ -12,6 +12,20 @@
 
 
         <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/card_name" />
+
+        <EditText
+            android:id="@+id/cardName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            tools:text="@string/app_name" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/card_number" />
@@ -21,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="phone"
             android:text=""
             tools:text="9999-9999-9999-9999" />
 
@@ -49,8 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="9/22" />
+                    android:inputType="phone"
+                    tools:text="12/34" />
             </LinearLayout>
 
             <LinearLayout
@@ -70,8 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text=""
+                    android:inputType="phone"
                     tools:text="987" />
             </LinearLayout>
         </LinearLayout>
@@ -85,5 +98,6 @@
             android:background="@color/color1"
             android:text="Add"
             android:textColor="@color/design_default_color_primary" />
+
     </LinearLayout>
 </layout>
