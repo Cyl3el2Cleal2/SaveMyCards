@@ -158,10 +158,10 @@ class LoginFragment : Fragment() {
 
         val executor = Executors.newSingleThreadExecutor()
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Set the title to display.")
-            .setSubtitle("Set the subtitle to display.")
-            .setDescription("Set the description to display")
-            .setNegativeButtonText("Negative Button")
+            .setTitle("Save My Cards.")
+            .setSubtitle("Authentication.")
+            .setDescription("")
+            .setNegativeButtonText("")
             .build()
         val biometricPrompt = activity?.let {
             BiometricPrompt(it, executor, object : BiometricPrompt.AuthenticationCallback() {
